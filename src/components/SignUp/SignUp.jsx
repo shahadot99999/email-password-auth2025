@@ -25,6 +25,13 @@ const SignUp = () => {
         return;
        }
 
+       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{6,}$/;
+       if(!passwordRegex.test(password)){
+            setErrorMessage('At least apply specail Character');
+            return;
+       }
+
+
         //create user with email and password
         createUserWithEmailAndPassword(auth, email, password)
         .then(result=>{
