@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../../firebase.init';
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
 
@@ -9,17 +9,26 @@ const SignUp = () => {
 
     const [errorMessage, setErrorMessage]= useState('');
 
+    const [showPassword, setShowPassword]= useState(false);
+
     const handleSignUp = e=>{
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+
+        const terms = e.target.terms.checked;
         //console.log(e.target.email.value);
         //concole.log(e.target.password.value);
-        console.log(email, password);
+        console.log(email, password, terms);
 
        //reset error and status
        setErrorMessage('');
        setSuccess(false);
+
+       if(!terms){
+        setErrorMessage('Please accept our terms and condition');
+        return ;
+       }
 
        if(password.length<6){
         setErrorMessage('password should be 6 characters or longer ');
@@ -60,23 +69,34 @@ const SignUp = () => {
                         <FaEye ></FaEye>
                      </button> */}
 
-                    <div className="relative"> {/* Wrap input + eye icon in a relative container */}
+                    
+
+                    <div className="relative">
                         <input
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
-                            className="input w-full pr-10"  // Add padding on the right for the eye icon
+                            className="input w-full pr-10"
                             placeholder="Password"
                         />
                         <button
+                            onClick={() => setShowPassword(!showPassword)}
                             type="button"
                             className="btn btn-xs btn-ghost absolute right-2 top-1/2 transform -translate-y-1/2"
-                          // Optional: Add toggle function
                         >
-                            <FaEye className="text-gray-500" />
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
 
                     <div><a className="link link-hover">Forgot password?</a></div>
+
+                    <div className="form-control">
+                        <label className="label cursor-pointer">
+                            <input type="checkbox" name='terms' className="checkbox checkbox-primary" />
+                            <span className="label-text">Accept Our Terms And Condition.</span>
+                            
+                        </label>
+                    </div>
+
                     <button type="submit" className="btn btn-neutral mt-4">Sign Up</button>
                 </form>
                 {
