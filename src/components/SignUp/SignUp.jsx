@@ -16,11 +16,12 @@ const SignUp = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-
+        const name = e.target.name.value;
+        const photo = e.target.photo.value;
         const terms = e.target.terms.checked;
         //console.log(e.target.email.value);
         //concole.log(e.target.password.value);
-        console.log(email, password, terms);
+        console.log(email, password, name, photo, terms);
 
        //reset error and status
        setErrorMessage('');
@@ -56,6 +57,8 @@ const SignUp = () => {
                 console.log('verification email sent');  
             })
 
+            //update profile name and information
+
         })
         .catch(error=>{
             console.log('Error', error.message);
@@ -69,8 +72,16 @@ const SignUp = () => {
             <h3 className="text-2xl ml-4 font-bold">Sign Up now!</h3>
             <div  className="card-body">
                 <form onSubmit={handleSignUp} className="form">
+                    <label className="label">Name</label>
+                    <input type="text" name='name' className="input" placeholder="name" />
+
+                     <label className="label">Photo url</label>
+                    <input type="text" name='photo' className="input" placeholder="Photo" />
+
+
                     <label className="label">Email</label>
                     <input type="email" name='email' className="input" placeholder="Email" />
+
                     <label className="label">Password</label>
                     {/* <input type="password" name='password' className="input" placeholder="Password" />
                      
